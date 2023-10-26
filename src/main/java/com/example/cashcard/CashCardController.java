@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +54,8 @@ public ResponseEntity<List<CashCard>> findAll(Pageable pageable) {
     Page<CashCard> page = cashCardRepository.findAll(
             PageRequest.of(
                     pageable.getPageNumber(),
-                    pageable.getPageSize()
+                    pageable.getPageSize(),
+                    pageable.getSortOr(Sort.by(Sort.Direction.ASC, "amount"))
     ));
     return ResponseEntity.ok(page.getContent());
 }
